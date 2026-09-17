@@ -1,0 +1,8 @@
+node_modules
+
+# Local credentials and generated files
+.env
+.env.*
+!.env.example
+.DS_Store
+node_modules/
