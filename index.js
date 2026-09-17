@@ -1,3 +1,10 @@
+require("dotenv").config();
+
+if (!process.env.FRONTEND_URL) {
+  throw new Error("Missing required environment variable: FRONTEND_URL");
+}
+const port = process.env.PORT || 3002;
+
 const express = require("express");
 const { Server } = require("socket.io");
 const http = require("http");
@@ -7,7 +14,7 @@ const server = http.createServer(app);
 // Set up Socket.IO with CORS configuration for a specific origin and allowed methods
 const io = new Server(server, {
   cors: {
-    origin: "https://tulip-fe.onrender.com",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
   },
 });
@@ -49,6 +56,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3002, () => {
-  console.log(`Server running on http://localhost:3002`);
+server.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
